@@ -1,30 +1,19 @@
 -- Enable a smooth transition between Neovim and Tmux window pane using '<C-hjkl>'
 return {
-				"christoomey/vim-tmux-navigator",
-				keys = {
-								{
-												"<c-h>",
-												function()
-																vim.cmd(":TmuxNavigateLeft")
-												end,
-								},
-								{
-												"<c-j>",
-												function()
-																vim.cmd(":TmuxNavigateDown")
-												end,
-								}
-								{
-												"<c-k>",
-												function()
-																vim.cmd(":TmuxNavigateUp")
-												end,
-								}
-								{
-												"<c-l>",
-												function()
-																vim.cmd(":TmuxNavigateRight")
-												end,
-								}
-				}
+  'christoomey/vim-tmux-navigator',
+  cmd = {
+    'TmuxNavigateLeft',
+    'TmuxNavigateDown',
+    'TmuxNavigateUp',
+    'TmuxNavigateRight',
+    'TmuxNavigatePrevious',
+    'TmuxNavigatorProcessList',
+  },
+  keys = {
+    { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
+    { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
+    { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
+    { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
+    { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+  },
 }
