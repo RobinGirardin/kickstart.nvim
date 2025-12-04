@@ -1,4 +1,4 @@
 -- monoglow colorscheme
 return {
-				"wnkz/monoglow.nvim",
+  'wnkz/monoglow.nvim',
 }
