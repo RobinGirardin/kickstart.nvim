@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = true 
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -126,6 +126,8 @@ vim.o.undofile = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
+vim.o.autoindent = true
 
 -- Keep signcolumn on by default
 vim.o.signcolumn = 'yes'
@@ -189,6 +191,11 @@ vim.diagnostic.config {
 }
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('v', '<leader>do', vim.diagnostic.open_float)
+
+-- Copy-Pasting keymaps
+vim.keymap.set('v', '<leader>y', '"+y') -- Copy to clipboard
+vim.keymap.set('v', '<leader>p', '"+p') -- Paste from clipboard
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -212,8 +219,8 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-vim.keymap.set("n", "<S-L>", ":bn<CR>", { desc = 'Go to the next buffer' })
-vim.keymap.set("n", "<S-H>", ":bp<CR>", { desc = 'Go the previous buffer' })
+vim.keymap.set('n', '<S-L>', ':bn<CR>', { desc = 'Go to the next buffer' })
+vim.keymap.set('n', '<S-H>', ':bp<CR>', { desc = 'Go the previous buffer' })
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -706,8 +713,8 @@ require('lazy').setup({
       formatters_by_ft = {
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
-        python = { "isort", "black" },
-        R = { "air" },
+        python = { 'isort', 'black' },
+        R = { 'air' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
