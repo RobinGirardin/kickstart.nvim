@@ -119,15 +119,17 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
+vim.o.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 
--- Enable undo/redo changes even after closing and reopening a file
+-- Save undo history
 vim.o.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
-vim.o.autoindent = true
 
 -- Keep signcolumn on by default
 vim.o.signcolumn = 'yes'
@@ -191,7 +193,7 @@ vim.diagnostic.config {
 }
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('v', '<leader>do', vim.diagnostic.open_float)
+vim.keymap.set({ 'v', 'n' }, '<leader>dof', vim.diagnostic.open_float, { desc = 'Open diagnostic floating window' })
 
 -- Copy-Pasting keymaps
 vim.keymap.set('v', '<leader>y', '"+y') -- Copy to clipboard
@@ -713,7 +715,7 @@ require('lazy').setup({
       formatters_by_ft = {
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'black' },
+        python = { 'isort', 'docformatter' },
         R = { 'air' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
@@ -957,7 +959,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
