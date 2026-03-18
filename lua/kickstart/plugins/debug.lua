@@ -35,7 +35,14 @@ return {
       desc = 'Debug: Start/Continue',
     },
     {
-      '<leader>si',
+      '<leader>dt',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Terminate',
+    },
+    {
+      '<leader>dsi',
       function()
         require('dap').step_into()
       end,
@@ -100,6 +107,32 @@ return {
       },
     }
 
+    require('dap-python').setup 'uv'
+    require('dap-python').test_runner = 'pytest'
+    table.insert(require('dap').configurations.python, {
+      type = 'python',
+      request = 'launch',
+      name = 'Python: Launch module',
+
+      -- `program` is what you'd use in `python <program>` in a shell
+      -- If you need to run the equivalent of `python -m <module>`, replace
+      -- `program = '${file}` entry with `module = "modulename"
+      module = function()
+        local file = vim.fn.expand '%:p' -- absolute path of current file
+        local root = vim.fn.getcwd() -- project root (cwd)
+
+        -- Strip the root prefix and the .py extension
+        local relative = file:gsub('^' .. vim.pesc(root) .. '/', '')
+        relative = relative:gsub('%.py$', '')
+
+        -- Convert path separators to dots  e.g. foo/bar/baz -> foo.bar.baz
+        return relative:gsub('/', '.')
+      end,
+      console = 'integratedTerminal',
+
+      -- Other options:
+      -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+    })
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
