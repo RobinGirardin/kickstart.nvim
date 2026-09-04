@@ -402,11 +402,15 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              ['<c-enter>'] = 'to_fuzzy_refine',
+              ['<c-d>'] = require('telescope.actions').delete_buffer
+            },
+            n = { ['<c-d>'] = require('telescope.actions').delete_buffer }
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
@@ -616,7 +620,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        ruff = {},
+        basedpyright = {},
         air = {},
         -- rust_analyzer = {},
         --
@@ -704,7 +708,8 @@ require('lazy').setup({
         -- You can specify filetypes to autoformat on save here:
         local enabled_filetypes = {
           -- lua = true,
-          -- python = true,
+          python = true,
+          markdown = true
         }
         if enabled_filetypes[vim.bo[bufnr].filetype] then
           return { timeout_ms = 500 }
@@ -719,8 +724,9 @@ require('lazy').setup({
       formatters_by_ft = {
         -- rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'black', 'docformatter' },
+        -- python = { 'ruff' },
         R = { 'air' },
+        markdown = { 'markdownlint' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
